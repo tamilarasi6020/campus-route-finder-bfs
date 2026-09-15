@@ -47,6 +47,9 @@ The BFS algorithm is implemented in the file:
 `campus_route_finder.py`
 
 ## Results
+## Output Screenshot
+
+![BFS Output](Screenshot%202026-09-15%20210750.png)
 
 ### Input
 
