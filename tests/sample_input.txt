@@ -1,0 +1,2 @@
+Starting location: Gate
+Destination: Lab
