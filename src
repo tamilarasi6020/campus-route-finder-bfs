@@ -1,0 +1,90 @@
+from collections import deque
+
+
+def bfs_shortest_path(graph, start, destination):
+    """
+    Finds the shortest path between start and destination
+    using Breadth-First Search.
+    """
+
+    queue = deque([start])
+    visited = {start}
+    parent = {start: None}
+
+    while queue:
+        current = queue.popleft()
+
+        if current == destination:
+            break
+
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parent[neighbor] = current
+                queue.append(neighbor)
+
+    # Destination was not reached
+    if destination not in parent:
+        return None
+
+    # Reconstruct the path
+    path = []
+    current = destination
+
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+
+    path.reverse()
+
+    return path
+
+
+def display_route(path):
+    """Displays the shortest route and hop count."""
+
+    if path is None:
+        print("No route found.")
+        return
+
+    print("\nShortest Route:")
+    print(" -> ".join(path))
+
+    hop_count = len(path) - 1
+    print("Hop Count:", hop_count)
+
+
+def main():
+
+    # Campus graph
+    graph = {
+        "Gate": ["Library", "Canteen"],
+        "Library": ["Gate", "Canteen", "Classroom"],
+        "Canteen": ["Gate", "Library", "Lab"],
+        "Classroom": ["Library", "Lab"],
+        "Lab": ["Canteen", "Classroom"]
+    }
+
+    print("====================================")
+    print("     CAMPUS ROUTE FINDER USING BFS")
+    print("====================================")
+
+    print("\nAvailable Locations:")
+    for location in graph:
+        print("-", location)
+
+    start = input("\nEnter starting location: ").strip().title()
+    destination = input("Enter destination: ").strip().title()
+
+    if start not in graph or destination not in graph:
+        print("\nInvalid location.")
+        print("Please select a location from the available list.")
+        return
+
+    path = bfs_shortest_path(graph, start, destination)
+
+    display_route(path)
+
+
+if __name__ == "__main__":
+    main()
